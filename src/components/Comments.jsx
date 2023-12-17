@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFetchData } from "../customHooks/useFetchData";
 import SingleComment from "./SingleComment";
 
 export default function Comments() {
+  const [isLoaded,setIsLoaded] = useState(false);
   const { data } = useFetchData(
     "https://jsonplaceholder.typicode.com/comments",
     30
   );
+
+  useEffect(()=> {
+    console.log(data)
+    setIsLoaded(true);
+  },[data])
 
   return (
     <div className="comments">
@@ -27,11 +33,15 @@ export default function Comments() {
         </p>
       </div>
 
-      <div className="cards">
-        {data.map((singledata) => (
-          <SingleComment key={singledata.id} data={singledata} />
-        ))}
-      </div>
+      {!isLoaded ? (
+        "loding....."
+      ) : (
+        <div className="cards">
+          {data.map((singledata) => (
+            <SingleComment key={singledata.id} data={singledata} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

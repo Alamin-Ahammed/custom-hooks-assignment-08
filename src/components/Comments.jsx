@@ -10,7 +10,6 @@ export default function Comments() {
   );
 
   useEffect(()=> {
-    console.log(data)
     setIsLoaded(true);
   },[data])
 
